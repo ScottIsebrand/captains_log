@@ -8,7 +8,21 @@ function Index(props) {
       <a href="/logs/new">Create/Log an Entry to the Captain's Log</a>
       <ul>
         {logs.map((log, index) => {
-          return <li>Title: {log.title}</li>;
+          return (
+            <div>
+              <li key={log._id}>
+                Title: <a href={`/logs/${log._id}`}>{log.title}</a>
+                <br />
+                Entry: {log.entry}
+                <br />
+                Ship is broken:{' '}
+                {log.shipIsBroken ? 'Yes' : 'No, ship is in good condition'}
+                <br />
+                {/* Timestamp: {timestamps.createdAt} */}
+              </li>
+              <br />
+            </div>
+          );
         })}
       </ul>
     </div>

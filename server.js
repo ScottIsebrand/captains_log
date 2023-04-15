@@ -31,7 +31,8 @@ app.get('/logs/new', (req, res) => {
 });
 
 // Route: POST/CREATE document (ie HTTP verb is POST; action is create; Mongoose func. is .create; CRUD op is Create)
-app.post('/logs/', (req, res) => {
+app.post('/logs', (req, res) => {
+  console.log(req.body);
   if (req.body.shipIsBroken === 'on') {
     req.body.shipIsBroken = true;
   } else {
@@ -41,7 +42,6 @@ app.post('/logs/', (req, res) => {
     res.redirect('/logs');
   });
   //   res.send(req.body);
-  res.render('New');
 });
 
 // Route: INDEX (ie HTTP verb is GET; action is index; Mongoose func. is .find; CRUD op is Read)
@@ -54,7 +54,7 @@ app.get('/logs', (req, res) => {
 // Route: SHOW
 app.get('/logs/:id', (req, res) => {
   Log.findById(req.params.id, (error, foundLog) => {
-    res.render('logs/Show', { log: foundLog });
+    res.render('Show', { log: foundLog });
   });
 });
 

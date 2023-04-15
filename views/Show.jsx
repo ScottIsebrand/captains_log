@@ -11,8 +11,8 @@ function Show(props) {
         <br />
         Entry: {log.entry}
         <br />
-        shipIsBroken:{' '}
-        {log.shipIsBroken ? 'Yes, broken' : 'Ship is worthy, not broken'}
+        Ship Is Broken:{' '}
+        {log.shipIsBroken ? 'Yes, broken' : 'No, ship is in good condition'}
       </p>
     </div>
   );

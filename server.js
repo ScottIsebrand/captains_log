@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const { Logger } = require('mongodb');
 const connectToDB = require('./config/captainsdb');
+const Log = require('./models/Log');
 // Create the Express app
 const app = express();
 
@@ -21,10 +22,10 @@ app.use((req, res, next) => {
 // === ROUTES
 // Route: Homepage message
 app.get('/', function (req, res) {
-  res.send('<h1>Captain Log</h1>');
+  res.send("<h1>Captain's Log</h1>");
 });
 
-// NEW Route in views/New.jsx, for form
+// Route: NEW (location views/New.jsx), for form; HTTP verb is GET
 app.get('/logs/new', (req, res) => {
   res.render('New');
 });
@@ -36,12 +37,21 @@ app.post('/logs/', (req, res) => {
   } else {
     req.body.shipIsBroken = false;
   }
-  res.send(req.body);
+  Log.create(req.body, (error, createdLog) => {
+    res.redirect('/logs');
+  });
+  //   res.send(req.body);
+  res.render('New');
 });
 
-// Index Route
+// Route: Index
+app.get('/logs', (req, res) => {
+  Log.find({}, (error, allLogs) => {
+    res.render('Index', { logs: allLogs });
+  });
+});
 
-// Show Route
+// Route: Show
 
 // Delete Route
 

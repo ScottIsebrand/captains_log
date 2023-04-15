@@ -30,7 +30,7 @@ app.get('/logs/new', (req, res) => {
   res.render('New');
 });
 
-// Route: CREATE/POST document (ie HTTP verb is POST; action is create; Mongoose func. is .create; CRUD op is Create)
+// Route: POST/CREATE document (ie HTTP verb is POST; action is create; Mongoose func. is .create; CRUD op is Create)
 app.post('/logs/', (req, res) => {
   if (req.body.shipIsBroken === 'on') {
     req.body.shipIsBroken = true;
@@ -44,20 +44,25 @@ app.post('/logs/', (req, res) => {
   res.render('New');
 });
 
-// Route: Index
+// Route: INDEX (ie HTTP verb is GET; action is index; Mongoose func. is .find; CRUD op is Read)
 app.get('/logs', (req, res) => {
   Log.find({}, (error, allLogs) => {
     res.render('Index', { logs: allLogs });
   });
 });
 
-// Route: Show
+// Route: SHOW
+app.get('/logs/:id', (req, res) => {
+  Log.findById(req.params.id, (error, foundLog) => {
+    res.render('logs/Show', { log: foundLog });
+  });
+});
 
-// Delete Route
+// Route: DELETE
 
-// Edit Route
+// Route: EDIT
 
-// Update Route
+// Route: UPDATE
 
 // Route: render 404 page
 app.get('*', (req, res) => {

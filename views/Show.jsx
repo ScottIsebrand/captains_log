@@ -5,7 +5,8 @@ function Show(props) {
 
   return (
     <div>
-      <a href="/logs">Go to Index of Captain's Log</a>
+      <a href="/logs">Go to Index of Logged Entries</a>
+      <h1>Captain's Log: Logged Entry</h1>
       <p>
         Title: {log.title}
         <br />

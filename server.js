@@ -3,6 +3,8 @@ require('dotenv').config();
 const express = require('express');
 const { Logger } = require('mongodb');
 const connectToDB = require('./config/captainsdb');
+const methodOverride = require('method-override');
+
 const Log = require('./models/Log');
 // Create the Express app
 const app = express();
@@ -11,9 +13,12 @@ const app = express();
 app.set('view engine', 'jsx');
 app.engine('jsx', require('jsx-view-engine').createEngine());
 
-// === MIDDLEWARE (app.use); parsess the data from the request; makes data accessible
+// === MIDDLEWARE
+// == Middleware (app.use): parsess the data from the request; makes data accessible
 app.use(express.urlencoded({ extended: false }));
-// == Middleware body-parser
+// == Middleware (app.use): override using a query value so that when we make request from form
+app.use(methodOverride('_method'));
+// == Middleware (app.use): body-parser
 app.use((req, res, next) => {
   console.log(req.url);
   next();
@@ -58,7 +63,12 @@ app.get('/logs/:id', (req, res) => {
   });
 });
 
-// Route: DELETE
+// Route: DELETE (ie HTTP verb is DELETE; action is destroy; Mongoose Model func. is .findByIdAndDelete)
+app.delete('/logs/:id', (req, res) => {
+  Log.findByIdAndRemove(req.params.id, (error, deletedLog) => {
+    res.redirect('/logs');
+  });
+});
 
 // Route: EDIT
 
@@ -66,7 +76,6 @@ app.get('/logs/:id', (req, res) => {
 
 // Route: render 404 page
 app.get('*', (req, res) => {
-  // res.redirect('/fruits');
   res.render('404');
 });
 

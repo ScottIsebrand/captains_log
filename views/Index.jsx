@@ -6,6 +6,7 @@ function Index(props) {
   return (
     <div>
       <a href="/logs/new">Create/Log an Entry to the Captain's Log</a>
+      <h1>Index of Logged Entries</h1>
       <ul>
         {logs.map((log, index) => {
           return (
@@ -19,8 +20,10 @@ function Index(props) {
                 {log.shipIsBroken ? 'Yes' : 'No, ship is in good condition'}
                 <br />
                 {/* Timestamp: {timestamps.createdAt} */}
+                <form method="POST" action={`/logs/${log._id}?_method=DELETE`}>
+                  <input type="submit" value="Delete" />
+                </form>
               </li>
-              <br />
             </div>
           );
         })}

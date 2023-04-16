@@ -3,6 +3,8 @@ const React = require('react');
 function New() {
   return (
     <div>
+      <a href="/logs">Go to Index of Logged Entries</a>
+
       <h1>Create New Ship-Status</h1>
       <form action="/logs" method="POST">
         Title: <input type="text" name="title" />

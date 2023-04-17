@@ -1,7 +1,7 @@
 const React = require('react');
 
 function Show(props) {
-  const { log } = props;
+  const { log } = props; //  const log  = props.log;
 
   return (
     <div>

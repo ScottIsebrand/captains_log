@@ -1,7 +1,8 @@
 // Require modules
 require('dotenv').config();
+// Require Express
 const express = require('express');
-const { Logger } = require('mongodb');
+// const { Logger } = require('mongodb');
 const connectToDB = require('./config/captainsdb');
 const methodOverride = require('method-override');
 
@@ -30,18 +31,23 @@ app.get('/', function (req, res) {
   res.render('Home');
 });
 
-// Route: NEW (location views/New.jsx), for form; HTTP verb is .get; action is new)
+// Route: NEW (form), (location views/New.jsx), for form; HTTP verb is .get; action is new)
 app.get('/logs/new', (req, res) => {
   res.render('New');
 });
 
 // Route: POST/CREATE document (ie HTTP verb is .post; action is create; Mongoose func. is .create; CRUD op is Create)
 app.post('/logs', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
+
   if (req.body.shipIsBroken === 'on') {
+    /// req.body = {title: string, entry: string, shipIsBroken: 'on'(a string)}
     req.body.shipIsBroken = true;
+    /// req.body = {title: string, entry: string, shipIsBroken: true (Boolean)}
   } else {
+    /// req.body = {title: string, entry: string}
     req.body.shipIsBroken = false;
+    /// req.body = {title: string, entry: string, shipIsBroken: false (Boolean)}
   }
   Log.create(req.body, (error, createdLog) => {
     res.redirect('/logs');
@@ -56,10 +62,10 @@ app.get('/logs', (req, res) => {
   });
 });
 
-// Route: SHOW
+// SHOW ROUTE to return/send back a single log entry
 app.get('/logs/:id', (req, res) => {
   Log.findById(req.params.id, (error, foundLog) => {
-    res.render('Show', { log: foundLog });
+    res.render('Show', { log: foundLog }); // Show.jsx will have { log: foundLog } as props
   });
 });
 
